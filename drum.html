@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <base href="">
     <title>JS Drum Kit</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -51,21 +52,22 @@
       </div>
     </div>
 
-    <audio data-key="81" src="./sounds/Echolight.wav" loop></audio>
-    <audio data-key="83" src="./sounds/s1.wav" loop></audio>
-    <audio data-key="68" src="./sounds/s2.wav" loop></audio>
-    <audio data-key="70" src="./sounds/s3.wav" loop></audio>
-    <audio data-key="71" src="./sounds/s4.wav" loop></audio>
-    <audio data-key="72" src="./sounds/s5.wav" loop></audio>
-    <audio data-key="74" src="./sounds/s6.wav" loop></audio>
-    <audio data-key="75" src="./sounds/s7.wav" loop></audio>
-    <audio data-key="76" src="./sounds/s8.wav" loop></audio>
-    <audio data-key="77" src="./sounds/s9.wav" loop></audio>
+    <audio data-key="81" src="./sounds/s0.mp3" loop></audio>
+    <audio data-key="83" src="./sounds/s1.mp3" loop></audio>
+    <audio data-key="68" src="./sounds/s2.mp3" loop></audio>
+    <audio data-key="70" src="./sounds/s3.mp3" loop></audio>
+    <audio data-key="71" src="./sounds/s4.mp3" loop></audio>
+    <audio data-key="72" src="./sounds/s5.mp3" loop></audio>
+    <audio data-key="74" src="./sounds/s6.mp3" loop></audio>
+    <audio data-key="75" src="./sounds/s7.mp3" loop></audio>
+    <audio data-key="76" src="./sounds/s8.mp3" loop></audio>
+    <audio data-key="77" src="./sounds/s9.mp3" loop></audio>
 
     <script>
       function ToggleAudio(keyCode, forceStop = false) {
         let audio = document.querySelector(`audio[data-key="${keyCode}"]`);
         const key = document.querySelector(`.key[data-key="${keyCode}"]`);
+        const key2 = this;
         if (!audio) return; // stop the function
 
         if (audio.currentTime === 0 && !forceStop) {
@@ -92,15 +94,12 @@
     
       let keySpace = document.querySelector(`.key[data-key="32"]`);
       keySpace.addEventListener("transitionend", RemoveTransition);
+
+
       function RemoveTransition(e) {
         console.log(e);
         if (e.propertyName !== "transform") return;
-        keySpace.classList.remove("playing");
-
-
-         
-
-
+        this.classList.remove("playing"); 
       }
 
       window.addEventListener("keydown", function (e) {
