@@ -1,3 +1,7 @@
+const keys = document.querySelectorAll(`.key`);
+
+const keySpace = document.querySelector(`.key[data-key="32"]`);
+
 
 function ToggleAudio(keyCode, forceStop = false) {
   let audio = document.querySelector(`audio[data-key="${keyCode}"]`);
@@ -27,7 +31,6 @@ function IsPlaying(keys) {
   return false;
 }
 
-let keySpace = document.querySelector(`.key[data-key="32"]`);
 keySpace.addEventListener("transitionend", RemoveTransition);
 
 
@@ -37,19 +40,32 @@ function RemoveTransition(e) {
   this.classList.remove("playing"); 
 }
 
-window.addEventListener("keydown", function (e) {
+function keyHandle(e) {
 
-  if (e.keyCode === 32) {
+    if (e.keyCode === 32) {
+        keySpace.classList.add("playing");
+        if (IsPlaying(keys)) {
+          keys.forEach((key) => ToggleAudio(key.dataset.key, true));
+        } else {
+          keys.forEach((key) => ToggleAudio(key.dataset.key));
+        }
+      } else {
+        ToggleAudio(e.keyCode);
+      }
+}
+function keyClickHandle(e) {
 
-    const keys = document.querySelectorAll(`.key`);
-    keySpace.classList.add("playing");
-    if (IsPlaying(keys)) {
-      keys.forEach((key) => ToggleAudio(key.dataset.key, true));
-    } else {
-      keys.forEach((key) => ToggleAudio(key.dataset.key));
-    }
-  } else {
-    ToggleAudio(e.keyCode);
-  }
-
-});
+    if (+e.currentTarget.dataset.key === 32) {
+        keySpace.classList.add("playing");
+        if (IsPlaying(keys)) {
+          keys.forEach((key) => ToggleAudio(key.dataset.key, true));
+        } else {
+          keys.forEach((key) => ToggleAudio(key.dataset.key));
+        }
+      } else {
+        ToggleAudio(e.currentTarget.dataset.key);
+      }
+}
+window.addEventListener("keydown", keyHandle);
+keys.forEach((key) => key.addEventListener("click", keyClickHandle));
+keySpace.addEventListener("click", keyClickHandle);
